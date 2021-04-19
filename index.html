@@ -18,12 +18,12 @@
     <main class="row m-2">
         <aside class="col-12 col-md-4">
             <h2>Search for a city:</h2>
-            <form>
+            <form id="city-search">
                 <input type="text" id="fname" class="mb-2 p-1 fs-4 border border-dark rounded-3 w-100" placeholder="City" name="fname"><br>
-                <input type="submit" class="btn btn-primary rounded-3 w-100" value="Search">
+                <button type="submit" class="btn btn-primary rounded-3 w-100">Search</button>
             </form>
             <hr>
-            <div>
+            <div id="search-history">
                 <!-- <button class="btn btn-secondary rounded-3 w-100 mb-2">City</button>
                 <button class="btn btn-secondary rounded-3 w-100 mb-2">City</button>
                 <button class="btn btn-secondary rounded-3 w-100 mb-2">City</button>
@@ -43,7 +43,7 @@
                 <p class="fs-5 fw-bold">Temp: <span id="current-temp"></span></p>
                 <p class="fs-5 fw-bold">Wind: <span id="current-wind"></span></p>
                 <p class="fs-5 fw-bold">Humidity: <span id="current-hum"></span></p>
-                <p class="fs-5 fw-bold">UV index: <span id="current-uvi"></span></p>                
+                <p class="fs-5 fw-bold">UV index: <span id="current-uvi" class="ps-1 pe-1 rounded-3"></span></p>                
             </article>
     
             <article class="p-2 mt-3">
@@ -52,52 +52,52 @@
                 <div id="5-day-forecast" class="row d-flex justify-content-center">
 
                     <div class="weather-card card text-white bg-primary h-50 m-2">
-                        <h5 class="card-header">18/04/2021</h5>
+                        <h5 class="card-header">1st day</h5>
                         <div class="card-body">
-                          <i class="d-flex justify-content-center"><img id="wicon" src="" alt="Weather icon"></i>
-                          <p class="card-text fw-bold">Temp: <span> 73.72 °F</span></p>
-                          <p class="card-text fw-bold">Wind: <span> 9.53 MPH</span></p>
-                          <p class="card-text fw-bold">Humudity: <span> 66%</span></p>
+                          <i class="d-flex justify-content-center"><img id="wicon" src="http://openweathermap.org/img/w/04d.png" alt="Weather icon"></i>
+                          <p class="card-text fw-bold">Temp: <span></span></p>
+                          <p class="card-text fw-bold">Wind: <span></span></p>
+                          <p class="card-text fw-bold">Humudity: <span></span></p>
                         </div>
                     </div>
 
                     <div class="weather-card card text-white bg-primary h-50 m-2">
-                        <h5 class="card-header">18/04/2021</h5>
+                        <h5 class="card-header">2nd day</h5>
                         <div class="card-body">
-                          <i class="d-flex justify-content-center"><img id="wicon" src="" alt="Weather icon"></i>
-                          <p class="card-text fw-bold">Temp: <span> 73.72 °F</span></p>
-                          <p class="card-text fw-bold">Wind: <span> 9.53 MPH</span></p>
-                          <p class="card-text fw-bold">Humudity: <span> 66%</span></p>
+                          <i class="d-flex justify-content-center"><img id="wicon" src="http://openweathermap.org/img/w/04d.png" alt="Weather icon"></i>
+                          <p class="card-text fw-bold">Temp: <span></span></p>
+                          <p class="card-text fw-bold">Wind: <span></span></p>
+                          <p class="card-text fw-bold">Humudity: <span></span></p>
                         </div>
                     </div>
 
                     <div class="weather-card card text-white bg-primary h-50 m-2">
-                        <h5 class="card-header">18/04/2021</h5>
+                        <h5 class="card-header">3th day</h5>
                         <div class="card-body">
-                          <i class="d-flex justify-content-center"><img id="wicon" src="" alt="Weather icon"></i>
-                          <p class="card-text fw-bold">Temp: <span> 73.72 °F</span></p>
-                          <p class="card-text fw-bold">Wind: <span> 9.53 MPH</span></p>
-                          <p class="card-text fw-bold">Humudity: <span> 66%</span></p>
+                          <i class="d-flex justify-content-center"><img id="wicon" src="http://openweathermap.org/img/w/04d.png" alt="Weather icon"></i>
+                          <p class="card-text fw-bold">Temp: <span></span></p>
+                          <p class="card-text fw-bold">Wind: <span></span></p>
+                          <p class="card-text fw-bold">Humudity: <span></span></p>
                         </div>
                     </div>
 
                     <div class="weather-card card text-white bg-primary h-50 m-2">
-                        <h5 class="card-header">18/04/2021</h5>
+                        <h5 class="card-header">4th day</h5>
                         <div class="card-body">
-                          <i class="d-flex justify-content-center"><img id="wicon" src="" alt="Weather icon"></i>
-                          <p class="card-text fw-bold">Temp: <span> 73.72 °F</span></p>
-                          <p class="card-text fw-bold">Wind: <span> 9.53 MPH</span></p>
-                          <p class="card-text fw-bold">Humudity: <span> 66%</span></p>
+                          <i class="d-flex justify-content-center"><img id="wicon" src="http://openweathermap.org/img/w/04d.png" alt="Weather icon"></i>
+                          <p class="card-text fw-bold">Temp: <span></span></p>
+                          <p class="card-text fw-bold">Wind: <span></span></p>
+                          <p class="card-text fw-bold">Humudity: <span></span></p>
                         </div>
                     </div>
 
                     <div class="weather-card card text-white bg-primary h-50 m-2">
-                        <h5 class="card-header">18/04/2021</h5>
+                        <h5 class="card-header">5th day</h5>
                         <div class="card-body">
-                          <i class="d-flex justify-content-center"><img id="wicon" src="" alt="Weather icon"></i>
-                          <p class="card-text fw-bold">Temp: <span> 73.72 °F</span></p>
-                          <p class="card-text fw-bold">Wind: <span> 9.53 MPH</span></p>
-                          <p class="card-text fw-bold">Humudity: <span> 66%</span></p>
+                          <i class="d-flex justify-content-center"><img id="wicon" src="http://openweathermap.org/img/w/04d.png" alt="Weather icon"></i>
+                          <p class="card-text fw-bold">Temp: <span></span></p>
+                          <p class="card-text fw-bold">Wind: <span></span></p>
+                          <p class="card-text fw-bold">Humudity: <span></span></p>
                         </div>
                     </div>  
         
