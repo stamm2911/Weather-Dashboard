@@ -1,7 +1,8 @@
-var requestUrl =
-"https://api.openweathermap.org/data/2.5/onecall?lat=19.432608&lon=-99.133209&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
 // var requestUrl =
-//   "https://api.openweathermap.org/data/2.5/onecall?lat=47.36667&lon=8.55&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
+// "https://api.openweathermap.org/data/2.5/onecall?lat=19.432608&lon=-99.133209&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
+var requestUrl =
+  "https://api.openweathermap.org/data/2.5/onecall?lat=47.36667&lon=8.55&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
+var currentForecast = $('#current-forecast');
 var cityName = $("#city-name");
 var currentTemp = $("#current-temp");
 var currentWind = $("#current-wind");
@@ -19,9 +20,19 @@ fetch(requestUrl)
   });
 
 function setInfo(weatherAPI) {
+  console.log(foreCast
+  .children()
+  .eq(0)
+  .children()
+  .eq(1)
+  .children()
+  .eq(0)
+  .children()
+  .eq(0));
   console.log(weatherAPI.daily);
   console.log(foreCast.children().eq(0).children().eq(0).text("puyo"));
   cityName.text(weatherAPI.timezone + " " + unixT2Date(weatherAPI.daily[0].dt));
+  currentForecast.children().eq(0).children().eq(1).attr('src','http://openweathermap.org/img/w/' + weatherAPI.daily[0].weather[0].icon + '.png');
   currentTemp.text(weatherAPI.daily[0].temp.eve + " C°");
   currentWind.text(weatherAPI.daily[0].wind_speed + " Km/h");
   currentHum.text(weatherAPI.daily[0].humidity + " %");
@@ -34,6 +45,17 @@ function setInfo(weatherAPI) {
       .children()
       .eq(0)
       .text(unixT2Date(weatherAPI.daily[i+1].dt));
+    
+    foreCast
+      .children()
+      .eq(i)
+      .children()
+      .eq(1)
+      .children()
+      .eq(0)
+      .children()
+      .eq(0).attr('src','http://openweathermap.org/img/w/' + weatherAPI.daily[i+1].weather[0].icon + '.png')
+
     foreCast
       .children()
       .eq(i)

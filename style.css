@@ -12,6 +12,10 @@ h6 {
   font-weight: 700;
 }
 
+main{
+  /* background-image: linear-gradient(to top, rgb(151, 151, 255), white); */
+}
+
 .weather-card{
     max-width: 11rem;
 }
