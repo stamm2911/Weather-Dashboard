@@ -131,7 +131,7 @@ function setNewBtn(lat, lon) {
 
 function getWeatherAPI(city) {
   fetch(
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
       city +
       "&limit=1&appid=9eeae915352d9090af1c067593b3b1a7"
   )
@@ -174,7 +174,7 @@ function setInfo(weatherAPI) {
     .eq(1)
     .attr(
       "src",
-      "http://openweathermap.org/img/w/" +
+      "https://openweathermap.org/img/w/" +
         weatherAPI.daily[0].weather[0].icon +
         ".png"
     );
@@ -223,7 +223,7 @@ function setInfo(weatherAPI) {
       .eq(0)
       .attr(
         "src",
-        "http://openweathermap.org/img/w/" +
+        "https://openweathermap.org/img/w/" +
           weatherAPI.daily[i + 1].weather[0].icon +
           ".png"
       );
