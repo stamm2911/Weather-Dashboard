@@ -17,7 +17,7 @@ searchForm.on("click", function (event) {
   var target = $(event.target);
   if (target.is("button") && searchForm.children().eq(0).val()) {
     getWeatherAPI(searchForm.children().eq(0).val().toLowerCase());
-  };
+  }
 });
 
 searchHist.on("click", function (event) {
@@ -38,22 +38,37 @@ searchHist.on("click", function (event) {
       .then(function (data) {
         setInfo(data);
       });
-  };
+  }
 });
 
-function init(){
-  var citySearchs = JSON.parse(localStorage.getItem('citySearchs'));
-  if(citySearchs){
-    console.log(citySearchs); 
-    for(var i = 0; i < citySearchs.length; i++){
+function init() {
+  var citySearchs = JSON.parse(localStorage.getItem("citySearchs"));
+  if (citySearchs) {
+    console.log(citySearchs);
+    for (var i = 0; i < citySearchs.length; i++) {
       searchHist.append("<button>" + citySearchs[i].city + "</button>");
-      searchHist.children().eq().prevObject[i].setAttribute("class", "btn btn-secondary rounded-3 w-100 mb-2");
-      searchHist.children().eq().prevObject[i].setAttribute("data-index", citySearchs[i].index);
-      searchHist.children().eq().prevObject[i].setAttribute("data-lat", citySearchs[i].lat);
-      searchHist.children().eq().prevObject[i].setAttribute("data-lon", citySearchs[i].lon);
-    };
-  };
-};
+      searchHist
+        .children()
+        .eq()
+        .prevObject[i].setAttribute(
+          "class",
+          "btn btn-secondary rounded-3 w-100 mb-2"
+        );
+      searchHist
+        .children()
+        .eq()
+        .prevObject[i].setAttribute("data-index", citySearchs[i].index);
+      searchHist
+        .children()
+        .eq()
+        .prevObject[i].setAttribute("data-lat", citySearchs[i].lat);
+      searchHist
+        .children()
+        .eq()
+        .prevObject[i].setAttribute("data-lon", citySearchs[i].lon);
+    }
+  }
+}
 
 function setNewBtn(lat, lon) {
   console.log(lat + " " + lon);
@@ -68,7 +83,10 @@ function setNewBtn(lat, lon) {
       .eq()
       .prevObject.last()
       .attr("class", "btn btn-secondary rounded-3 w-100 mb-2");
-    searchHist.children().eq().prevObject[index].setAttribute("data-index", index);
+    searchHist
+      .children()
+      .eq()
+      .prevObject[index].setAttribute("data-index", index);
     searchHist.children().eq().prevObject.last().attr("data-lat", lat);
     searchHist.children().eq().prevObject.last().attr("data-lon", lon);
   } else {
@@ -94,22 +112,22 @@ function setNewBtn(lat, lon) {
       searchHist.children().eq().prevObject[searchHistLimit].textContent
     );
     searchHistLimit++;
-  };
+  }
   searchForm.children().eq(0).val("");
   historyStorage = [];
-  for(var i = 0; i < searchHist.children().eq().prevObject.length; i++){
+  for (var i = 0; i < searchHist.children().eq().prevObject.length; i++) {
     var historyObject = {
-      index:searchHist.children().eq().prevObject[i].dataset.index,
-      city:searchHist.children().eq().prevObject[i].textContent,
-      lat:searchHist.children().eq().prevObject[i].dataset.lat,
-      lon:searchHist.children().eq().prevObject[i].dataset.lon,
+      index: searchHist.children().eq().prevObject[i].dataset.index,
+      city: searchHist.children().eq().prevObject[i].textContent,
+      lat: searchHist.children().eq().prevObject[i].dataset.lat,
+      lon: searchHist.children().eq().prevObject[i].dataset.lon,
     };
     historyStorage.push(historyObject);
-  };
+  }
   console.log(historyStorage);
   console.log(JSON.stringify(historyStorage));
-  localStorage.setItem('citySearchs',JSON.stringify(historyStorage));
-};
+  localStorage.setItem("citySearchs", JSON.stringify(historyStorage));
+}
 
 function getWeatherAPI(city) {
   fetch(
@@ -142,9 +160,9 @@ function getWeatherAPI(city) {
             setInfo(data);
           });
         setNewBtn(data[0].lat, data[0].lon);
-      };
+      }
     });
-};
+}
 
 function setInfo(weatherAPI) {
   console.log(weatherAPI.daily);
@@ -160,6 +178,7 @@ function setInfo(weatherAPI) {
         weatherAPI.daily[0].weather[0].icon +
         ".png"
     );
+  currentForecast.children().eq(0).children().eq(1).attr("Weather icon");
   currentTemp.text(weatherAPI.daily[0].temp.eve + " C°");
   currentWind.text(weatherAPI.daily[0].wind_speed + " Km/h");
   currentHum.text(weatherAPI.daily[0].humidity + " %");
@@ -185,7 +204,7 @@ function setInfo(weatherAPI) {
       .children()
       .eq(0)
       .attr("class", "ps-1 pe-1 rounded-3 bg-gradient bg-danger");
-  };
+  }
   for (var i = 0; i < 5; i++) {
     foreCast
       .children()
@@ -208,6 +227,16 @@ function setInfo(weatherAPI) {
           weatherAPI.daily[i + 1].weather[0].icon +
           ".png"
       );
+    foreCast
+      .children()
+      .eq(i)
+      .children()
+      .eq(1)
+      .children()
+      .eq(0)
+      .children()
+      .eq(0)
+      .attr("alt", "Weather icon");
     foreCast
       .children()
       .eq(i)
@@ -238,7 +267,7 @@ function setInfo(weatherAPI) {
       .children()
       .eq(0)
       .text(weatherAPI.daily[i + 1].humidity + " %");
-  };
+  }
 
   function unixT2Date(dateNow) {
     // ------Recovered from: https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript-----
@@ -257,5 +286,5 @@ function setInfo(weatherAPI) {
     var formattedTime = hours + "/" + minutes + "/" + seconds;
     // -------------------------------------------------------------------
     return formattedTime;
-  };
-};
+  }
+}
