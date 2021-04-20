@@ -1,7 +1,3 @@
-// var requestUrl2 =
-//   "https://api.openweathermap.org/data/2.5/onecall?lat=19.432608&lon=-99.133209&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
-// var requestUrl =
-//   "https://api.openweathermap.org/data/2.5/onecall?lat=47.36667&lon=8.55&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
 var searchForm = $("#city-search");
 var searchHist = $("#search-history");
 var currentForecast = $("#current-forecast");
@@ -11,27 +7,28 @@ var currentWind = $("#current-wind");
 var currentHum = $("#current-hum");
 var currentUvi = $("#current-uvi");
 var foreCast = $("#5-day-forecast");
+var historyStorage = [];
 var searchHistLimit = 0;
 
 searchForm.on("click", function (event) {
   event.preventDefault();
-  // console.log(searchForm.children().eq(0).val());
-  // var chosenCity = "https://api.openweathermap.org/data/2.5/onecall?lat=" + 47.36667 + "&lon=" + 8.55 + "&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
   var target = $(event.target);
-  // console.log("limit" + searchHistLimit);
-  // console.log(searchHist.children().eq().prevObject.length);
   if (target.is("button") && searchForm.children().eq(0).val()) {
-    // console.log("yes" + searchHistLimit);
     getWeatherAPI(searchForm.children().eq(0).val().toLowerCase());
   }
 });
 
-searchHist.on('click', function(){
+searchHist.on("click", function (event) {
   var target = $(event.target);
-  if (target.is("button")){
+  if (target.is("button")) {
+    console.log(target);
     console.log(target.data());
     fetch(
-      "https://api.openweathermap.org/data/2.5/onecall?lat="+target.data().lat+"&lon="+target.data().lon+"&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7"
+      "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+        target.data().lat +
+        "&lon=" +
+        target.data().lon +
+        "&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7"
     )
       .then(function (response) {
         return response.json();
@@ -42,39 +39,31 @@ searchHist.on('click', function(){
   }
 });
 
-function setNewBtn(lat,lon){
+function setNewBtn(lat, lon) {
+  console.log(lat+" "+lon);
   if (searchHist.children().eq().prevObject.length < 10) {
     searchHist.append(
-      "<button>" +
-        searchForm.children().eq(0).val().toLowerCase() +
-        "</button>"
+      "<button>" + searchForm.children().eq(0).val().toLowerCase() + "</button>"
     );
     searchHist
       .children()
       .eq()
       .prevObject.last()
       .attr("class", "btn btn-secondary rounded-3 w-100 mb-2");
-    searchHist
-      .children()
-      .eq()
-      .prevObject.last()
-      .attr("data-lat", lat);
-    searchHist
-      .children()
-      .eq()
-      .prevObject.last()
-      .attr("data-lon", lon);
+    searchHist.children().eq().prevObject.last().attr("data-lat", lat);
+    searchHist.children().eq().prevObject.last().attr("data-lon", lon);
   } else {
     if (searchHistLimit > 9) {
       searchHistLimit = 0;
     }
-    searchHist.children().eq().prevObject[
-      searchHistLimit
-    ].textContent = searchForm.children().eq(0).val();
+    searchHist.children().eq().prevObject[searchHistLimit].textContent = searchForm.children().eq(0).val();
+    searchHist.children().eq().prevObject[searchHistLimit].setAttribute("data-lat", lat);
+    searchHist.children().eq().prevObject[searchHistLimit].setAttribute("data-lon", lon);
+    console.log(searchHist.children().eq().prevObject[searchHistLimit].textContent);
     searchHistLimit++;
   }
   searchForm.children().eq(0).val("");
-};
+}
 
 function getWeatherAPI(city) {
   fetch(
@@ -89,12 +78,16 @@ function getWeatherAPI(city) {
       if (data.length === 0 || data.cod == 404) {
         searchForm.children().eq(0).val("");
         alert("Enter a valid city");
-      }else{
+      } else {
         console.log(data);
         console.log(data[0].lat);
         console.log(data[0].lon);
         fetch(
-          "https://api.openweathermap.org/data/2.5/onecall?lat="+data[0].lat+"&lon="+data[0].lon+"&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7"
+          "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+            data[0].lat +
+            "&lon=" +
+            data[0].lon +
+            "&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7"
         )
           .then(function (response) {
             return response.json();
@@ -102,7 +95,7 @@ function getWeatherAPI(city) {
           .then(function (data) {
             setInfo(data);
           });
-          setNewBtn(data[0].lat,data[0].lon);
+        setNewBtn(data[0].lat, data[0].lon);
       }
     });
 }
