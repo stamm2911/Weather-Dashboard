@@ -1,9 +1,9 @@
+// var requestUrl2 =
+//   "https://api.openweathermap.org/data/2.5/onecall?lat=19.432608&lon=-99.133209&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
 // var requestUrl =
-// "https://api.openweathermap.org/data/2.5/onecall?lat=19.432608&lon=-99.133209&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
-var requestUrl =
-  "https://api.openweathermap.org/data/2.5/onecall?lat=47.36667&lon=8.55&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
-var searchForm = $('#city-search');
-var searchHist = $('#search-history');
+//   "https://api.openweathermap.org/data/2.5/onecall?lat=47.36667&lon=8.55&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
+var searchForm = $("#city-search");
+var searchHist = $("#search-history");
 var currentForecast = $("#current-forecast");
 var cityName = $("#city-name");
 var currentTemp = $("#current-temp");
@@ -13,35 +13,62 @@ var currentUvi = $("#current-uvi");
 var foreCast = $("#5-day-forecast");
 var searchHistLimit = 0;
 
-// fetch(requestUrl)
-//   .then(function (response) {
-//     return response.json();
-//   })
-//   .then(function (data) {
-//     setInfo(data);
-//   });
-
-searchForm.on('click',function(event){
+searchForm.on("click", function (event) {
   event.preventDefault();
   console.log(searchForm.children().eq(0).val());
+  // var chosenCity = "https://api.openweathermap.org/data/2.5/onecall?lat=" + 47.36667 + "&lon=" + 8.55 + "&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7";
   var target = $(event.target);
-  // console.log(target);
+  console.log("limit" + searchHistLimit);
   console.log(searchHist.children().eq().prevObject.length);
-  if(target.is("button") && searchHist.children().eq().prevObject.length < 3 && searchForm.children().eq(0).val()){
-    console.log("yes");
-    searchHist.append("<button>"+searchForm.children().eq(0).val()+"</button>")
-    searchHist.children().eq().prevObject.last().attr('class','btn btn-secondary rounded-3 w-100 mb-2');
-    searchForm.children().eq(0).val('')
-  }else if(target.is("button")){
-    if(searchHistLimit > 2){
-      searchHistLimit = 0;
+  if (target.is("button") && searchForm.children().eq(0).val()) {
+    // console.log("yes" + searchHistLimit);
+    if (searchHist.children().eq().prevObject.length < 3) {
+      getWeatherAPI(searchForm.children().eq(0).val().toLowerCase());
+      searchHist.append(
+        "<button>" + searchForm.children().eq(0).val() + "</button>"
+      );
+      searchHist
+        .children()
+        .eq()
+        .prevObject.last()
+        .attr("class", "btn btn-secondary rounded-3 w-100 mb-2");
+      searchForm.children().eq(0).val("");
+    } else {
+      getWeatherAPI(searchForm.children().eq(0).val().toLowerCase());
+      if (searchHistLimit > 2) {
+        searchHistLimit = 0;
+      }
+      searchHist.children().eq().prevObject[
+        searchHistLimit
+      ].textContent = searchForm.children().eq(0).val();
+      searchForm.children().eq(0).val("");
+      searchHistLimit++;
     }
-    console.log("current limit" + searchHistLimit);
-    searchHist.children().eq().prevObject[searchHistLimit].textContent = searchForm.children().eq(0).val();
-    searchHistLimit ++;
-    searchForm.children().eq(0).val('') 
   }
 });
+
+function getWeatherAPI(city) {
+  
+    fetch("http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid=9eeae915352d9090af1c067593b3b1a7")
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        console.log(data[0].lat);
+        console.log(data[0].lon);
+      });
+
+  // else if(city == "mexico"){
+  //   fetch("https://api.openweathermap.org/data/2.5/onecall?lat=19.432608&lon=-99.133209&exclude=hourly,minutely&units=metric&dt=&appid=9eeae915352d9090af1c067593b3b1a7")
+  //     .then(function (response) {
+  //       return response.json();
+  //     })
+  //     .then(function (data) {
+  //       setInfo(data);
+  //     });
+  // };
+};
 
 function setInfo(weatherAPI) {
   console.log(weatherAPI.daily);
