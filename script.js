@@ -21,7 +21,7 @@ searchForm.on("click", function (event) {
 searchHist.on("click", function (event) {
   var target = $(event.target);
   if (target.is("button")) {
-    console.log(target);
+    console.log(target.text());
     console.log(target.data());
     fetch(
       "https://api.openweathermap.org/data/2.5/onecall?lat=" +
@@ -40,8 +40,10 @@ searchHist.on("click", function (event) {
 });
 
 function setNewBtn(lat, lon) {
-  console.log(lat+" "+lon);
+  console.log(lat + " " + lon);
   if (searchHist.children().eq().prevObject.length < 10) {
+    var index = searchHist.children().eq().prevObject.length;
+    console.log(index);
     searchHist.append(
       "<button>" + searchForm.children().eq(0).val().toLowerCase() + "</button>"
     );
@@ -50,19 +52,47 @@ function setNewBtn(lat, lon) {
       .eq()
       .prevObject.last()
       .attr("class", "btn btn-secondary rounded-3 w-100 mb-2");
+    searchHist.children().eq().prevObject[index].setAttribute("data-index", index);
     searchHist.children().eq().prevObject.last().attr("data-lat", lat);
     searchHist.children().eq().prevObject.last().attr("data-lon", lon);
   } else {
     if (searchHistLimit > 9) {
       searchHistLimit = 0;
     }
-    searchHist.children().eq().prevObject[searchHistLimit].textContent = searchForm.children().eq(0).val();
-    searchHist.children().eq().prevObject[searchHistLimit].setAttribute("data-lat", lat);
-    searchHist.children().eq().prevObject[searchHistLimit].setAttribute("data-lon", lon);
-    console.log(searchHist.children().eq().prevObject[searchHistLimit].textContent);
+    searchHist.children().eq().prevObject[
+      searchHistLimit
+    ].textContent = searchForm.children().eq(0).val();
+    searchHist
+      .children()
+      .eq()
+      .prevObject[searchHistLimit].setAttribute("data-index", searchHistLimit);
+    searchHist
+      .children()
+      .eq()
+      .prevObject[searchHistLimit].setAttribute("data-lat", lat);
+    searchHist
+      .children()
+      .eq()
+      .prevObject[searchHistLimit].setAttribute("data-lon", lon);
+    console.log(
+      searchHist.children().eq().prevObject[searchHistLimit].textContent
+    );
     searchHistLimit++;
   }
   searchForm.children().eq(0).val("");
+  historyStorage = [];
+  for(var i = 0; i < searchHist.children().eq().prevObject.length; i++){
+    var historyObject = {
+      index:searchHist.children().eq().prevObject[i].dataset.index,
+      city:searchHist.children().eq().prevObject[i].textContent,
+      lat:searchHist.children().eq().prevObject[i].dataset.lat,
+      lon:searchHist.children().eq().prevObject[i].dataset.lon,
+    }
+    historyStorage.push(historyObject);
+  }
+  console.log(historyStorage);
+  console.log(JSON.stringify(historyStorage));
+  localStorage.setItem('citySearchs',JSON.stringify(historyStorage));
 }
 
 function getWeatherAPI(city) {
