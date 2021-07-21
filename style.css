@@ -1,7 +1,6 @@
 body {
   font-family: "Titillium Web", sans-serif;
   font-size: 16px;
-  /* background-color: aqua; */
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-image: linear-gradient(to top, rgb(168, 168, 255), white);
@@ -14,9 +13,6 @@ h4,
 h5,
 h6 {
   font-weight: 700;
-}
-
-main {
 }
 
 .weather-card {

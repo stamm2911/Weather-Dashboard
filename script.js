@@ -17,7 +17,7 @@ searchForm.on("click", function (event) {
   var target = $(event.target);
   if (target.is("button") && searchForm.children().eq(0).val()) {
     getWeatherAPI(searchForm.children().eq(0).val().toLowerCase());
-  }
+  };
 });
 
 searchHist.on("click", function (event) {
@@ -38,7 +38,7 @@ searchHist.on("click", function (event) {
       .then(function (data) {
         setInfo(data);
       });
-  }
+  };
 });
 
 function init() {
@@ -66,9 +66,9 @@ function init() {
         .children()
         .eq()
         .prevObject[i].setAttribute("data-lon", citySearchs[i].lon);
-    }
-  }
-}
+    };
+  };
+};
 
 function setNewBtn(lat, lon) {
   console.log(lat + " " + lon);
@@ -92,7 +92,7 @@ function setNewBtn(lat, lon) {
   } else {
     if (searchHistLimit > 9) {
       searchHistLimit = 0;
-    }
+    };
     searchHist.children().eq().prevObject[
       searchHistLimit
     ].textContent = searchForm.children().eq(0).val();
@@ -112,7 +112,7 @@ function setNewBtn(lat, lon) {
       searchHist.children().eq().prevObject[searchHistLimit].textContent
     );
     searchHistLimit++;
-  }
+  };
   searchForm.children().eq(0).val("");
   historyStorage = [];
   for (var i = 0; i < searchHist.children().eq().prevObject.length; i++) {
@@ -123,11 +123,11 @@ function setNewBtn(lat, lon) {
       lon: searchHist.children().eq().prevObject[i].dataset.lon,
     };
     historyStorage.push(historyObject);
-  }
+  };
   console.log(historyStorage);
   console.log(JSON.stringify(historyStorage));
   localStorage.setItem("citySearchs", JSON.stringify(historyStorage));
-}
+};
 
 function getWeatherAPI(city) {
   fetch(
@@ -160,9 +160,9 @@ function getWeatherAPI(city) {
             setInfo(data);
           });
         setNewBtn(data[0].lat, data[0].lon);
-      }
+      };
     });
-}
+};
 
 function setInfo(weatherAPI) {
   console.log(weatherAPI.daily);
@@ -204,7 +204,7 @@ function setInfo(weatherAPI) {
       .children()
       .eq(0)
       .attr("class", "ps-1 pe-1 rounded-3 bg-gradient bg-danger");
-  }
+  };
   for (var i = 0; i < 5; i++) {
     foreCast
       .children()
@@ -267,11 +267,11 @@ function setInfo(weatherAPI) {
       .children()
       .eq(0)
       .text(weatherAPI.daily[i + 1].humidity + " %");
-  }
+  };
 
   function unixT2Date(dateNow) {
-    // ------Recovered from: https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript-----
-    // let unix_timestamp = 1618830000;
+    // ------Code from line 274 to 285 recovered from: https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript-----
+
     // Create a new JavaScript Date object based on the timestamp
     // multiplied by 1000 so that the argument is in milliseconds, not seconds.
     var date = new Date(dateNow * 1000);
@@ -281,10 +281,10 @@ function setInfo(weatherAPI) {
     var minutes = +date.getMonth() + 1;
     // Seconds part from the timestamp
     var seconds = date.getFullYear();
-
     // Will display time in 10:30:23 format
     var formattedTime = hours + "/" + minutes + "/" + seconds;
-    // -------------------------------------------------------------------
+    
+    // ----------------------------------------------------------------------------------------------------------------------------------------------
     return formattedTime;
-  }
-}
+  };
+};
